@@ -12,11 +12,11 @@ struct ContentView: View {
     
     @State var number1=""
     @State var number2=""
-    @State var selectedIndex=0
+    @State var selectedIndex = 0
     @State var resultText=""
     
-    func changeNum(_ text:String) -> Int{
-        Int(text) ?? 0
+    func changeNum(_ text: String) -> Double {
+        Double(text) ?? 0
     }
 
     var body: some View {
@@ -40,17 +40,24 @@ struct ContentView: View {
             
             
             Button(action: {
+                let num1 = changeNum(number1)
+                let num2 = changeNum(number2)
+
                 switch selectedIndex{
-                case 0:resultText="\(changeNum(number1)+changeNum(number2))"
-                case 1:resultText="\(changeNum(number1)-changeNum(number2))"
-                case 2:resultText="\(changeNum(number1)*changeNum(number2))"
-                case 3:if changeNum(number2)==0{
-                    resultText="割る数には0以外を代入してください"
-                }else{
-                    resultText="\(Double(changeNum(number1))/Double(changeNum(number2)))"
-                }
+                case 0:
+                    resultText="\(num1 + num2)"
+                case 1:
+                    resultText="\(num1 - num2)"
+                case 2:
+                    resultText="\(num1 * num2)"
+                case 3:
+                    if num2 == 0{
+                        resultText="割る数には0以外を代入してください"
+                    } else {
+                        resultText="\(num1 / num2)"
+                    }
                 default:
-                    resultText="数字を入力してください"
+                    resultText = "数字を入力してください"
                 }
                 
             }, label: {
@@ -67,7 +74,7 @@ struct ContentView: View {
 }
 
 struct CustomTextField:View{
-    @Binding var number:String
+    @Binding var number: String
     
     var body: some View{
         TextField("", text: $number)
@@ -76,6 +83,7 @@ struct CustomTextField:View{
             .keyboardType(.numberPad)
     }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
